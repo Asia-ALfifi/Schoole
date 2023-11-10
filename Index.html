@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بطاقة التسامح</title>
+    
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+    <style>
+        
+     .heart {
+            color: white; /* تحديد لون القلب */
+        }
+      div{
+            background-color: #333;
+              color: white;
+             margin-top: 10px;
+              text-align: center;
+        width: 100vw;
+        }
+          button {
+              display: inline-block;
+              padding: 10px 20px;
+              font-size: 16px;
+              text-align: center;
+              text-decoration: none;
+              cursor: pointer;
+              border: 1px solid #3498db;
+              border-radius: 5px;
+              color: #fff;
+              background-color: #3498db;
+              transition: background-color 0.3s;
+        }
+         button:hover {
+                background-color: #2980b9;
+                }
+        
+        /* أسلوب حقل الإدخال */
+input {
+  box-sizing: border-box;
+  width: 30%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+}
+
+/* تحويل الحقل عند التحويل إليه */
+input:hover,
+input:focus {
+  border-color: #3498db;
+} 
+        
+        body{
+      font-family: Arial, sans-serif;
+      margin: 0;
+      overflow: hidden;
+      padding:2%;
+      display: flex;
+      flex-direction: column;
+      align-items:flex-start;
+      justify-content: center;
+      
+      
+        }
+    
+      @media (max-width: 600px) {
+          canvas {
+            width: 100%;
+            height: auto;
+          }
+        }
+
+   
+    </style>
+
+ 
+</head>
+<body>
+    <h1>بطاقة التسامح</h1>
+  <canvas id="myCanvas" width="551" height="389" style="border:1px solid #000;"></canvas>
+   
+  <script>
+    // احصل على مرجع لعنصر canvas
+    
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    
+    var screenWidth = window.innerWidth;
+    var screenHeight = window.innerHeight;
+      
+     
+    
+
+    var image = new Image();
+    image.src = 'x.png';
+      
+     image.onload = function() {
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+     // input إلى  
+    var textX = 50;
+    var textY = 100;
+    
+      
+    // إنشاء العنصر الأول input
+    var inputElement1 = document.createElement('input');
+    document.body.appendChild(inputElement1);
+    inputElement1.type = 'text';
+    inputElement1.placeholder = 'إلى';
+      
+    // إنشاء العنصر الثاني input
+    var inputElement2 = document.createElement('input');
+    document.body.appendChild(inputElement2);
+    inputElement2.type = 'text';
+    inputElement2.placeholder = 'من';
+      
+      
+      //----------------------
+      
+       function drawText() {
+      var textInput1 = inputElement1.value;
+      var textInput2 = inputElement2.value;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      ctx.font = "30px Arial";
+      ctx.fillStyle = "blue";
+      ctx.textAlign = 'left';  // لضمان الكتابة من اليمين إلى اليسار
+      ctx.fillText(textInput1, textX, textY);
+      ctx.fillText(textInput2, textX, textY + 40); // تغيير الارتفاع لتفادي التداخل
+    }
+
+    inputElement1.addEventListener('input', function() {
+      requestAnimationFrame(drawText);
+    });
+
+    inputElement2.addEventListener('input', function() {
+      requestAnimationFrame(drawText);
+    });
+      
+   //-------------------------------------------------
+
+
+    function saveImage() {
+      // احصل على بيانات الصورة من ال canvas
+      var imageData = canvas.toDataURL('image/png');
+
+      // إنشاء رابط (link) لتحميل الصورة
+      var link = document.createElement('a');
+      link.href = imageData;
+      link.download = 'بطاقة التسامح.png';
+
+      // إضافة الرابط إلى الصفحة وتشغيل النقر عليه تلقائيًا
+      document.body.appendChild(link);
+      link.click();
+
+      // إزالة الرابط من الصفحة
+      document.body.removeChild(link);
+    }
+     
+     
+      
+      
+  </script>
+    
+ <button onclick="saveImage()">حفظ الصورة</button>
+  <div>
+      <p>🤍 صمم خصيصًا للمعلمة فضية العمراني</p>  
+</div>
+
+</body>
+</html>
